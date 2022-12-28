@@ -1,0 +1,216 @@
+    <html>
+        <head>
+            <title>
+                <%= locals.title%>
+            </title>
+            <meta charset="UTF-8">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <link rel="stylesheet" href="/css/home.css">
+        </head>
+        <body>
+          <nav class="navigation">
+            <div class = 'logo-box'>
+          <div class ='gola' style =" font-size: 20px;">
+            🎯
+           </div>
+           </div>
+            <div>
+             <h1 class ='todo'>TODO</h1>
+            </div>
+            <div class ='search'>
+                <input type = 'text' name="text" placeholder="Search your task...">
+                <span>&#129488;</span>
+
+            </div>
+            <div class ='bell-box'>  	
+	          &#128276;
+            </div>   
+            
+            <div class = 'notification'>
+                &#128233;
+            </div>
+            <div class ='profile-pic'>
+                <img src="img/ut.jpeg">
+
+            </div >
+        </nav>
+            
+        <form id="add-task-form" action="/create-task" method="POST">
+            <div  id = 'direction1'>
+    
+            <!-- first box -->
+          <div>
+            <div class = 'box1' style="display: flex; flex-direction: row;"> 
+                <div class="for-inline">
+                <div class ='icon1'>
+                    
+                    🛠️
+                </div>
+                <div class = 'heading1'>
+                   <h5 style="color: grey; font-family: sans-serif;">Dashboard Under Progress</h5>
+                </div> 
+                </div> 
+            </div>
+            <div class ='mini-boxes'>
+            <div class="add-task-demo">
+                <span style="margin-left:20px; font-size: 15px;" >😣</span>
+                <h3 style="margin: 0; color:rgb(1, 181, 252) ; ">Add Task</h3>
+
+            </div>
+            <div  class ='setting-demo'>
+                <span style="margin-left:20px; font-size: 15px;" > <i class="fa-solid fa-gears"  style="color: grey;"></i> </span>
+                <h3 style="margin: 0; color:black; ">Setting</h3>
+            </div>
+            <div  class="menu-demo">
+                <i class="fa-solid fa-ellipsis-vertical" style ='margin-left: 13px;'></i>
+
+            </div>
+            </div>
+            <div class="developed">
+                <div class ='developer-profile'>
+                    <img src="img/ut.jpeg">
+    
+                </div >
+                <div>
+                    <h4 style="margin: 0; margin-left: -9px;">Proudly developed by</h4>
+                    <span style="color: gray; margin-left:-9px;">Utkarsh Singh</span>
+                    <span>😊</span>
+                    
+                </div>
+            </div>
+            </div>
+       
+            <!-- second box -->
+
+            <div class = 'box2'>
+                <div class ='pending-task'>
+                    <span style=" margin-left:10px">&#129320;</span>
+                    <h3 style = 'font-family: sans-serif; color: rgb(177, 134, 83);' >Pending Tasks</h3>
+                    <div class='count' style="color:rgb(235, 5, 5)">
+                        <%= todo_list.filter((i) => !i.isCompleted).length %>
+                    </div>
+                </div>
+                <div class='select-add'>
+                    <div class ='new-task'>
+                        <span style=" margin-left:20px">&#129320;</span>
+                        <h3 style="font-family: sans-serif; color: rgb(177, 135, 83);">New Task</h3>
+                        <div class = 'cross-botton'>
+                            <i class="fa-solid fa-xmark" style="font-size: 22px; color:red"></i>
+                        </div>
+                    </div>
+                    <div class ="description">
+                        <input type="text" name="name" placeholder="Enter description" required>
+                    </div>
+                    <div class="date-category">
+                        <div class='category'>
+                        <!-- <input type = 'text'  name = "category"   placeholder="Category" required> -->
+                            <div class="dropdown">
+                                <span id="select-cat" name="category">Category</span>
+                                <div class="dropdown-content">
+                                    <p onclick="addWork()" id="work-cat">Work</p>
+                                    <p onclick="addSchool()" id="school-cat">School</p>
+                                    <p onclick="addPersonal()" id="personal-cat">Personal</p>
+                                    <p onclick="addOther()" id="other-cat">other</p>
+                                </div>
+                            </div>
+                       </div>
+                       <div class="date">
+                        <input type="date" name ="date"  required>
+                       </div>
+                       <div class="task-add-button">
+                        <div class="button">
+                            <button type="submit"><i class="fa-solid fa-plus" style="color: blueviolet; margin-left: 55px;"> 
+                                <span style="font-family: sans-serif; color: blueviolet;"> ADD TASK </span></i></button>    
+                       </div>
+                    </div>
+                    </div>
+            </div>
+                <div class = 'output-box'>
+                    <ul>
+                            
+                        <% for (let i of todo_list) {%> 
+                            <% if (!i.isCompleted) {%> 
+                                <div class="view-box"> 
+                                <div class ='discription-name'>
+                                    <p  style="font-family: sans-serif; color:rgb(136, 100, 56);  font-weight: 700;">🎯<%= i.name %></p>
+                                </div>
+                                <div  class ='date-display'>
+                                    <p style="font-family: sans-serif; color:rgb(8, 8, 8); font-weight: 800; "><%= i.date %></p> 
+                                
+                                </div>
+                                <div class="for-inline-complete-other">
+                                <a href="/complete-task/?id=<%= i._id %>" class ='complete-botton'>
+                                    <span>&#9989;</span>
+                                    <span style="color: green; font-weight: 700;">Complete</span>
+                                </a>
+                                <div class="other-botton">
+                                    <h3 style="color: white; margin: 0; opacity: 0.8; font-family: sans-serif;">Other</h3>
+                                    
+                                </div>
+                                </div>
+                                    
+                            </div>
+                        <% } } %>
+                    </ul>
+        
+                </div>  
+            </div>
+            
+            
+
+            <!-- for box 3 -->
+            <div class = 'box3'>
+                <div class ='pending-task'>
+                    <span style=" margin-left:10px">😎</span>
+                    <h3 style = 'font-family: sans-serif; color: rgb(31, 113, 160);' >Completed Tasks</h3>
+                    <div class='count' style="color: rgb(31, 113, 160);">
+                        <%= todo_list.filter((i) => i.isCompleted).length %>
+                    </div>
+                </div>
+
+                    <ul>
+                               
+                        <% for (let i of todo_list) {%> 
+                            <% if (i.isCompleted) {%> 
+                            <div class="view-box2"> 
+                               <div class ='delete-inline'>
+                                <div style="margin-left:10px">
+                                    <p style="font-family: sans-serif; color:rgb(31, 113, 160);; font-weight: 700;"><%= i.category %></p>
+                                </div>
+                                <div class="delete-button" style="margin-top: 12px;">
+                                    <a href="/delete-task/?id=<%= i._id %>">
+                                        <i class="fa-solid fa-trash"  style="font-size: 22px; color:red; margin-left: 140px; font-size: 16px;"></i>
+                                    </a>
+                                </div>
+                            </div>
+                               
+                              <div class="on-time-inline">                             
+                            <div class ='complete-task-box'>
+                            <div class = "gola2">
+                            </div>
+                                 <span style=" color:green; font-size: 12px; font-weight: 700; font-family: sans-serif; margin-left: 3px; margin-top: 4px;">On time</span> 
+
+                            </div> 
+                            <div style="color:rgb(31, 113, 160) ; font-size: 12px; font-weight: 700; margin-top: 4px;">
+                                See Details
+                            </div>
+                            <div>
+                                <i class="fa-solid fa-arrow-right" style="color:rgb(31, 113, 160) ; font-size: 12px; font-weight: 700; margin-top: 4px;"></i> 
+                            </div>
+                           </div>                          
+                            </div>  
+
+                           
+                        <% } } %>
+                    </ul>           
+                </div>                       
+            </div>
+        </div>
+            </form>
+
+    <!-- output box -->
+    
+        
+        <script type="text/javascript" src="/js/home.js"></script>
+    </body>
+</html>
